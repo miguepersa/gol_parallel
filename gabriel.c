@@ -28,6 +28,7 @@ int main(int argc, char const *argv[])
     int n_visualizaciones;
     char archivo[MAX_STRING];
     memoria_compartida *mem = NULL;
+	pthread_t *hilos; 						
 
     /* Validar argumentos */
     if (argc != 5)
@@ -41,6 +42,9 @@ int main(int argc, char const *argv[])
     n_generaciones = atoi(argv[2]);
     n_visualizaciones = atoi(argv[3]);
     strcpy(archivo, argv[4]);
+
+    /* Reservar memoria para hilos */
+    hilos = (pthread_t *)malloc(n_hilos * sizeof(pthread_t));
 
     /* Inicializar memoria compartida */
     mem = (memoria_compartida *) malloc(sizeof(memoria_compartida));
