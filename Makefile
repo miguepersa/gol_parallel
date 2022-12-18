@@ -1,17 +1,14 @@
-OBJ = mainh.o funciones.o golh.c
+OBJ = main.o gol.c
 CC = gcc
 CFLAGS = -ansi -Wall -pedantic -g -pthread
 
 all: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o juego_h
 
-mainh.o: mainh.c
+main.o: main.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
-funciones.o: funciones.c
-	$(CC) -c $(CFLAGS) $< -o $@
-
-golh.o: golh.c
+gol.o: gol.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
