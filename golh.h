@@ -12,23 +12,11 @@ typedef struct{
     int n;
 }arg;
 
-/* Mapa del juego */
-celula mapa[MAX_FIL][MAX_COL];
-
-int flag[MAX_FIL][MAX_COL];
-
-/* Bloqueador mutex */
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
-/* Numero de filas y columnas del mapa */
-int filas = 0;
-int cols = 0;
-
 /* Funcion principal del juego que instancia los hilos */
-void golh(int, int, int, int, int);
+void golh(celula[][MAX_COL], int[][MAX_COL], int, int, int, int, int);
 
 /* Runner de los hilos */
-void *run(arg*);
+void *run(void*);
 
 /* Funcion que cuenta los vecinos de las celulas y genera el estado siguiente */
 void gen_next_state(int, int);

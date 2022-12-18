@@ -19,8 +19,9 @@ void procesar_archivo(celula m[][MAX_COL], char *archivo, int *nfilas, int *ncol
     aux[1] = '\0';
 
     /* Lectura y almacenamiento de los datos del archivo */
-    while (fgets(buffer, *ncols+1, f) != NULL && j < *nfilas)
+    while (fgets(buffer, 1024, f) != NULL)
     {
+        buffer[*ncols] = '\0';
         for (i = 0; i < *ncols; i++)
         {
             aux[0] = buffer[i]; 
@@ -50,37 +51,37 @@ void print_gen(celula m[][MAX_COL], int nfilas, int ncols)
     
 }
 
-int count_vecinos(celula mapa[][MAX_COL], int i, int j, int filas, int cols)
+int count_vecinos(celula m[][MAX_COL], int i, int j, int filas, int cols)
 {
     int vecinos = 0;
 
     if (i - 1 < 0 && j - 1 < 0) /* Esquina superior izquierda */
     {
-        vecinos = vecinos + mapa[i][j+1].estado == 1 + mapa[i+1][j+1].estado == 1 + mapa[i+1][j].estado == 1;
+        vecinos = vecinos + (m[i][j+1].estado == 1) + (m[i+1][j+1].estado == 1) + (m[i+1][j].estado == 1);
     } else if (i - 1 < 0 && j + 1 >= cols) /* Esquina superior derecha */
     {
-        vecinos = vecinos + mapa[i][j-1].estado == 1 + mapa[i+1][j-1].estado == 1 + mapa[i+1][j].estado == 1;
+        vecinos = vecinos + (m[i][j-1].estado == 1) + (m[i+1][j-1].estado == 1) + (m[i+1][j].estado == 1);
     } else if (i + 1 >= filas && j - 1 < 0) /* Esquina inferior izquierda */
     {
-        vecinos = vecinos + mapa[i][j+1].estado == 1 + mapa[i-1][j+1].estado == 1 + mapa[i-1][j].estado == 1;
+        vecinos = vecinos + (m[i][j+1].estado == 1) + (m[i-1][j+1].estado == 1) + (m[i-1][j].estado == 1);
     } else if (i + 1 >= filas && j + 1 >= cols) /* Esquina inferior derecha */
     {
-        vecinos = vecinos + mapa[i-1][j].estado == 1 + mapa[i-1][j-1].estado == 1 + mapa[i][j-1].estado == 1;
+        vecinos = vecinos + (m[i-1][j].estado == 1) + (m[i-1][j-1].estado == 1) + (m[i][j-1].estado == 1);
     } else if (i - 1 < 0 && j - 1 >= 0 && j + 1 < cols) /* Borde superior */
     {
-        vecinos = vecinos + mapa[i][j+1].estado == 1 + mapa[i+1][j+1].estado == 1 + mapa[i+1][j].estado == 1 + mapa[i+1][j-1].estado == 1 + mapa[i][j-1].estado == 1;
+        vecinos = vecinos + (m[i][j+1].estado == 1) + (m[i+1][j+1].estado == 1) + (m[i+1][j].estado == 1) + (m[i+1][j-1].estado == 1) + (m[i][j-1].estado == 1);
     } else if (i - 1 >= 0 && j - 1 < 0 && i + 1 < filas) /* Borde izquierdo */
     {
-        vecinos = vecinos + mapa[i][j+1].estado == 1 + mapa[i+1][j+1].estado == 1 + mapa[i+1][j].estado == 1 + mapa[i-1][j].estado == 1 + mapa[i-1][j+1].estado == 1;
+        vecinos = vecinos + (m[i][j+1].estado == 1) + (m[i+1][j+1].estado == 1) + (m[i+1][j].estado == 1) + (m[i-1][j].estado == 1) + (m[i-1][j+1].estado == 1);
     }  else if (i - 1 >= 0 && j + 1 >= cols && i + 1 < filas) /* Borde derecho */
     {
-        vecinos = vecinos + mapa[i+1][j].estado == 1 + mapa[i+1][j-1].estado == 1 + mapa[i][j-1].estado == 1 + mapa[i-1][j-1].estado == 1 + mapa[i-1][j].estado == 1;
+        vecinos = vecinos + (m[i+1][j].estado == 1) + (m[i+1][j-1].estado == 1) + (m[i][j-1].estado == 1) + (m[i-1][j-1].estado == 1) + (m[i-1][j].estado == 1);
     } else if (i + 1 >= filas && j + 1 <= cols && j - 1 >= 0) /* Borde inferior */
     {
-        vecinos = vecinos + mapa[i][j-1].estado == 1 + mapa[i-1][j-1].estado == 1 + mapa[i-1][j].estado == 1 + mapa[i-1][j+1].estado == 1 + mapa[i][j+1].estado == 1;
+        vecinos = vecinos + (m[i][j-1].estado == 1) + (m[i-1][j-1].estado == 1) + (m[i-1][j].estado == 1) + (m[i-1][j+1].estado == 1) + (m[i][j+1].estado == 1);
     } else /* Centro del mapa */
     {
-        vecinos = vecinos + mapa[i][j-1].estado == 1 + mapa[i-1][j-1].estado == 1 + mapa[i-1][j].estado == 1 + mapa[i-1][j+1].estado == 1 + mapa[i][j+1].estado == 1 + mapa[i+1][j+1].estado == 1 + mapa[i+1][j].estado == 1 + mapa[i+1][j-1].estado == 1;
+        vecinos = vecinos + (m[i][j-1].estado == 1) + (m[i-1][j-1].estado == 1) + (m[i-1][j].estado == 1) + (m[i-1][j+1].estado == 1) + (m[i][j+1].estado == 1) + (m[i+1][j+1].estado == 1) + (m[i+1][j].estado == 1) + (m[i+1][j-1].estado == 1);
     }
 
     return vecinos;
