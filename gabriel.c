@@ -14,11 +14,13 @@
 typedef struct
 {
     FILE *fp;
-    char **tablero;
+    int **tablero;
     int nfilas;
     int ncol;
     pthread_mutex_t mutex;
 }memoria_compartida;
+
+void* leer_archivo(void *arg);
 
 
 int main(int argc, char const *argv[])
@@ -62,11 +64,14 @@ int main(int argc, char const *argv[])
     fscanf(mem->fp, "%d %d\n", &mem->nfilas, &mem->ncol);
 
     /* Reservar memoria para el tablero */
-    mem->tablero = (char**) malloc(mem->nfilas * sizeof(char*));
+    mem->tablero = (int**) malloc(mem->nfilas * sizeof(int*));
     for(int i = 0; i < mem->nfilas; i++)
     {
-        mem->tablero[i] = (char*) malloc(mem->ncol * sizeof(char));
+        mem->tablero[i] = (int*) malloc(mem->ncol * sizeof(int));
     }
+
+    /* Leer archivo */
+    //pthread_create(&Worker[j], NULL, thread_Pool, (void*) Arg[j]);
 
 
     /* Liberar memoria */
@@ -74,9 +79,15 @@ int main(int argc, char const *argv[])
     {
         free(mem->tablero[i]);
     }
+    free(hilos);
     free(mem->tablero);
     fclose(mem->fp);
 	pthread_mutex_destroy(&mem->mutex);
     free(mem);
     return 0;
+}
+
+void* leer_archivo(void *arg)
+{
+
 }
